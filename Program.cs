@@ -66,16 +66,12 @@ namespace AttentionTracker
                 var interruptions = window.interruptions;
                 if (interruptions > 0) interruptions--;
                 //interruptions minus one because it's not really an interruption if you didn't look back
-              //  if (WasFocus(window))
-                //{
-                    
-                Console.WriteLine("Spent {0} tobii timestamps on window '{1}'. There were {2} interruptions while viewing this window.", window.totalTime, window.name, interruptions);
-
-                   /* for (int j = 0; j < window.interruptor.Count - 1; j++)
+                if (WasFocus(window))
+                {
+                    //try to classify each interruptor
+                   for (int j = 0; j < window.interruptor.Count - 1; j++)
                     {
-
-                    Console.WriteLine("Interrupted by \t {0} for {1} tobii timestamps", window.interruptor[j].Item1, window.interruptor[j].Item2);
-                        /*var interruptDuration = window.startTimeStamps[j + 1] - window.interruptor[j].Item2;
+                        var interruptDuration = window.startTimeStamps[j + 1] - window.interruptor[j].Item2;
                         if ((interruptions == 1))
                         {
                             if (WasDistraction(window.interruptor[j], window)) Console.WriteLine("Distracted by \t {0} for {1} tobii timestamps", window.interruptor[j].Item1, interruptDuration);
@@ -85,10 +81,10 @@ namespace AttentionTracker
                         {
                             if (!WasDistraction(window.interruptor[j], window))
                             Console.WriteLine("You may have been multitasking on window {0}", window.interruptor[j].Item1);
-                        }*/
-                    }*/
+                        }
+                    }
                     Console.WriteLine("\n");
-                //}
+                }
             }
             Console.WriteLine("There were a total of {0} tobii timestamps elapsed (need to convert this to actual seconds above)", totalTime);
         }
@@ -112,7 +108,7 @@ namespace AttentionTracker
                 {
                     ttime += t.Item2;
                 }
-                if (ttime < .75 * window.totalTime) return true;
+                if (ttime < .4 * window.totalTime) return true;
                 else return false;
          }
 
